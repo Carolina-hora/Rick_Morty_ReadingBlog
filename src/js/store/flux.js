@@ -1,43 +1,54 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	
+
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			characters: [],
+			episodes: [],
+			locations: [],
+			nextCharacterURL: "https://rickandmortyapi.com/api/character",
+			nextEpisodeURL: "https://rickandmortyapi.com/api/episode",
+			nextLocationURL: "https://rickandmortyapi.com/api/location",
+			favorites:  localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : []
+
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			getAllCharacters: async () => {
+				const response = await fetch (getStore().nextCharacterURL);
+				const data = await response.json();
+				setStore({characters: [...getStore().characters,...data.results], nextCharacterURL: data.info.next})
+				
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			
+			getAllEpisodes: async () => {
+				const response = await fetch (getStore().nextEpisodeURL);
+				const data = await response.json();
+				setStore({episodes: [...getStore().episodes,...data.results], nextEpisodeURL: data.info.next})
+
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			getAllLocations: async () => {
+				const response = await fetch (getStore().nextLocationURL);
+				const data = await response.json();
+				setStore({locations: [...getStore().locations,...data.results], nextLocationURL: data.info.next})
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			},
+
+			setFavorites: (newFav) => {
+				const favorites = getStore()?.favorites || []
+				if(!favorites.includes(newFav)) {
+					setStore({favorites:[...getStore().favorites, newFav]})
+				} else {
+					setStore({favorites: favorites.filter((oldFav) => oldFav !== newFav)})
+				}
+				localStorage.setItem("favorites", JSON.stringify(getStore().favorites))
+			},
+
+			// removeFavorites: (removedFav) => {
+			// 	const updatedFavorites = getStore().favorites.filter((oldFav) => oldFav !== removedFav)
+			// 	setStore({favorites: updatedFavorites})
+			// 	localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
+			// }
 		}
 	};
 };
