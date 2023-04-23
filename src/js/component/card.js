@@ -16,12 +16,13 @@ export const Card = ({item, cardType, cardWidth}) => {
     const [hearted, setHearted] = useState(false)
     const heartIcon = hearted ? solidHeart : regularHeart;
     const toggleHeart = () => {
-        setHearted(!hearted);
-        if(store.favorites.includes(item.name)) {
-            store.favorites.filter((oldFav) => oldFav !== item.name);
-        } else {
-            actions.setFavorites(item.name)
-        }
+        const newHearted = !hearted
+        setHearted(newHearted);
+        // if(store.favorites.includes(item.name)) {
+        //     store.favorites.filter((oldFav) => oldFav !== item.name);
+        // } else {
+            actions.setFavorites(item.name, newHearted)
+        // }
     }
 
     useEffect (() => {
@@ -31,6 +32,9 @@ export const Card = ({item, cardType, cardWidth}) => {
             setHearted (false)
         }
     }, [store.favorites])
+
+  
+
     return (
         
             <div className="card mx-2" style={{minWidth: cardWidth}}>
@@ -49,14 +53,14 @@ export const Card = ({item, cardType, cardWidth}) => {
                     <p className="card-text text-start">Episode: {item.episode}</p> 
                     </>}
                     <div className="d-flex justify-content-evenly" style={{position: "absolute", bottom: "10px", right: "5px", width: "100%"}}>
-                    <button href="#" className="btn btn-white" onClick={() => {
-                        actions.setFavorites(item.name)
+                    <button className="btn btn-white" onClick={() => {
+                        // actions.setFavorites(item.name)
                         toggleHeart()
                     }}>
                             <FontAwesomeIcon icon={heartIcon} />
                     </button>
-                    <Link to ={"/single/"+ cardType + "/" + item.id  }>
-                    <button href="#" className="btn btn-primary">Read More</button>
+                    <Link to={`/single/${cardType}/${item.id}`}>
+                    <button className="btn btn-primary">Read More</button>
                     </Link>
                     </div> 
                     

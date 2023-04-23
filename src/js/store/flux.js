@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			nextEpisodeURL: "https://rickandmortyapi.com/api/episode",
 			nextLocationURL: "https://rickandmortyapi.com/api/location",
 			favorites:  localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : []
+			
 
 		},
 		actions: {
@@ -34,15 +35,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			setFavorites: (newFav) => {
+			setFavorites: (newFav, hearted) => {
 				const favorites = getStore()?.favorites || []
-				if(!favorites.includes(newFav)) {
+				if(hearted) {
 					setStore({favorites:[...getStore().favorites, newFav]})
+					// console.log(newFav)
 				} else {
-					setStore({favorites: favorites.filter((oldFav) => oldFav !== newFav)})
+					const updatedFavorites = favorites.filter((oldFav) => oldFav !== newFav)
+					console.log(updatedFavorites)
+					setStore({favorites: updatedFavorites})
+					
+					// console.log(getStore().favorites)
+					
 				}
+				
 				localStorage.setItem("favorites", JSON.stringify(getStore().favorites))
 			},
+			
 
 			// removeFavorites: (removedFav) => {
 			// 	const updatedFavorites = getStore().favorites.filter((oldFav) => oldFav !== removedFav)
