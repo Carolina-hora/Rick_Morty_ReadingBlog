@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
+// Missing: add the link between the favorites and their read more, need to access the type and id of each card
+
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	return (

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "../component/card";
 
+// Missing: getEpisodeCharacter gives an error when it runs, connected with the map for "characters" that is shown in the read more for each episode
 
 export const Single = () => {
 	const params = useParams();
@@ -13,7 +14,7 @@ export const Single = () => {
 
 	useEffect(() => {
 		getSingleCharacter(params.thetype, params.theid)
-		getEpisodeCharacter();
+		// getEpisodeCharacter();
 	}, [])
 
 	const getSingleCharacter = async (type, id) => {
@@ -53,7 +54,7 @@ export const Single = () => {
 							<Card key={character.id} item={character} cardType="character" cardWidth="12rem" />))}
 					</div>
 				}
-				else if (typeof item[itemKey] !== "object")
+				 if (typeof item[itemKey] !== "object")
 					return <p key={index}> {itemKey}: {item[itemKey]}</p>
 			})}
 
