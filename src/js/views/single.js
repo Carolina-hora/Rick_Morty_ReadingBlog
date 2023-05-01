@@ -24,36 +24,36 @@ export const Single = () => {
 
 	}
 
-	const getEpisodeCharacter = async () => {
-		const response = await fetch("https://rickandmortyapi.com/api/" + params.thetype + "/" + params.theid);
-		//console.log("response", response);
-		const data = await response.json();
-		//console.log("data", data);
-		let charactersInfo = []
-		for (let i = 0; i < data.characters.length; i++) {
-			const responseCharacters = await fetch(data.characters[i])
-			const dataCharacter = await responseCharacters.json()
-			charactersInfo.push(dataCharacter)
+	// const getEpisodeCharacter = async () => {
+	// 	const response = await fetch("https://rickandmortyapi.com/api/" + params.thetype + "/" + params.theid);
+	// 	//console.log("response", response);
+	// 	const data = await response.json();
+	// 	//console.log("data", data);
+	// 	let charactersInfo = []
+	// 	for (let i = 0; i < data.characters.length; i++) {
+	// 		const responseCharacters = await fetch(data.characters[i])
+	// 		const dataCharacter = await responseCharacters.json()
+	// 		charactersInfo.push(dataCharacter)
 
-		}
-		data.characters = charactersInfo
-		setCharacterEpisode(data.characters)
-		//console.log(data.characters)
+	// 	}
+	// 	data.characters = charactersInfo
+	// 	setCharacterEpisode(data.characters)
+	// 	//console.log(data.characters)
 
 
-	}
+	// }
 
 
 	return (
 		<div className="container">
 			<h1>Name: {item.name}</h1>
 			{Object.keys(item).map((itemKey, index) => {
-				if (itemKey == "characters") {
-					return <div className="d-flex overflow-auto">
-						{characterEpisode && characterEpisode.map((character) => (
-							<Card key={character.id} item={character} cardType="character" cardWidth="12rem" />))}
-					</div>
-				}
+				// if (itemKey == "characters") {
+				// 	return <div className="d-flex overflow-auto">
+				// 		{characterEpisode && characterEpisode.map((character) => (
+				// 			<Card key={character.id} item={character} cardType="character" cardWidth="12rem" />))}
+				// 	</div>
+				// }
 				 if (typeof item[itemKey] !== "object")
 					return <p key={index}> {itemKey}: {item[itemKey]}</p>
 			})}

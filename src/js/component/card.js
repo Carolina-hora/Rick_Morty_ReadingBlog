@@ -15,28 +15,28 @@ export const Card = ({item, cardType, cardWidth}) => {
     const { store, actions } = useContext(Context);
     const [hearted, setHearted] = useState(false)
     const heartIcon = hearted ? solidHeart : regularHeart;
-    // const toggleHeart = () => {
-    //     const newHearted = !hearted
-    //     setHearted(newHearted);
-    //     // if(store.favorites.includes(item.name)) {
-    //     //     store.favorites.filter((oldFav) => oldFav !== item.name);
-    //     // } else {
-    //         actions.setFavorites(item.name, newHearted)
-    //     // }
-    // }
-
     const toggleHeart = () => {
-        const newHearted = !hearted;
+        const newHearted = !hearted
         setHearted(newHearted);
-        const favoriteItem = {
-            name: item.name,
-            id: item.id,
-            type: cardType,
-            url: `/single/${cardType}/${item.id}`,
-            hearted: newHearted
-        };
-        actions.setFavorites(favoriteItem);
-    };
+        // if(store.favorites.includes(item.name)) {
+        //     store.favorites.filter((oldFav) => oldFav !== item.name);
+        // } else {
+            actions.setFavorites(item.name, newHearted)
+        // }
+    }
+
+    // const toggleHeart = () => {
+    //     const newHearted = !hearted;
+    //     setHearted(newHearted);
+    //     const favoriteItem = {
+    //         name: item.name,
+    //         id: item.id,
+    //         type: cardType,
+    //         url: `/single/${cardType}/${item.id}`,
+    //         hearted: newHearted
+    //     };
+    //     actions.setFavorites(favoriteItem);
+    // };
 
     useEffect (() => {
         if(store.favorites.includes(item.name)) {
